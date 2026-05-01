@@ -1,0 +1,4 @@
+Large Language Models (LLMs) are powerful AI systems that can understand and generate human language.
+They are widely used in chatbots, summarization, translation, and coding assistants.
+Embeddings convert text into vectors so semantic similarity can be computed.
+Retrieval-Augmented Generation (RAG) combines retrieval and generation to improve accuracy.
