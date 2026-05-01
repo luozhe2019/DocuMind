@@ -1,404 +1,149 @@
-\# AI Research Copilot
+# DocuMind — AI Document Assistant with RAG
 
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![LLM](https://img.shields.io/badge/LLM-Qwen-green)
+![RAG](https://img.shields.io/badge/RAG-Enabled-orange)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
+DocuMind is an AI-powered document assistant that leverages Retrieval-Augmented Generation (RAG) to deliver accurate, context-aware answers from local documents.
 
-**A Retrieval-Augmented Generation (RAG) System for Document Question Answering**
+---
 
+## Demo
 
+![UI Preview](screenshot.png)
 
-\---
+Users can upload or load documents and interact with them through a chat interface powered by a local LLM.
 
+---
 
+## Key Highlights
 
-\## Overview
+- Combines semantic retrieval + LLM generation (RAG)
+- Reduces hallucination by grounding answers in document context
+- Fully local pipeline (no external API required)
+- Interactive web UI with real-time Q&A
 
+---
 
+## How It Works
 
-This project implements a Retrieval-Augmented Generation (RAG) pipeline that enables users to query documents and receive context-aware responses from a local Large Language Model (LLM).
-
-
-
-The system improves answer accuracy by retrieving relevant document context before generation, reducing hallucination compared to standard LLM usage.
-
-
-
-\---
-
-
-
-\## Key Features
-
-
-
-\* Support for multiple document formats (`.txt`, `.md`, `.pdf`)
-
-\* Context-preserving text chunking with overlap
-
-\* Semantic embeddings using transformer-based models
-
-\* Efficient similarity search using FAISS
-
-\* Local LLM inference (Qwen)
-
-\* Interactive command-line interface
-
-\* Prompt engineering for controlled response generation
-
-
-
-\---
-
-
-
-\## System Architecture
-
-
-
-```text
-
-User Query
-
-&#x20;   ↓
-
-Query Embedding
-
-&#x20;   ↓
-
-Vector Search (FAISS)
-
-&#x20;   ↓
-
-Relevant Context Retrieval
-
-&#x20;   ↓
-
+```
+User Question
+     ↓
+Embedding
+     ↓
+FAISS Retrieval
+     ↓
+Relevant Context
+     ↓
 Prompt Construction
-
-&#x20;   ↓
-
+     ↓
 LLM Generation
-
-&#x20;   ↓
-
+     ↓
 Final Answer
-
 ```
 
+---
 
+## Features
 
-\---
+- Document ingestion (.txt, .md, .pdf)
+- Context-aware text chunking
+- Sentence-transformer embeddings
+- FAISS vector similarity search
+- Local LLM inference (Qwen)
+- Gradio-based web interface
 
+---
 
+## Tech Stack
 
-\## Project Structure
+- Python
+- PyTorch
+- Hugging Face Transformers
+- Sentence Transformers
+- FAISS
+- Gradio
 
+---
 
+## Project Structure
 
-```text
-
-ai-research-copilot/
-
+```
+DocuMind/
 ├── data/
-
-│   └── sample.txt
-
 ├── src/
-
-│   ├── document\_loader.py
-
-│   ├── text\_splitter.py
-
-│   ├── embeddings.py
-
-│   ├── vector\_store.py
-
-│   ├── prompts.py
-
-│   └── rag\_pipeline.py
-
-├── app.py
-
+├── gradio_app.py
+├── requirements.txt
+├── screenshot.png
 └── README.md
-
 ```
 
+---
 
-
-\---
-
-
-
-\## Installation
-
-
-
-\### 1. Clone the repository
-
-
+## Installation
 
 ```bash
-
-git clone https://github.com/your-username/ai-research-copilot.git
-
-cd ai-research-copilot
-
+git clone https://github.com/luozhe2019/DocuMind.git
+cd DocuMind
+pip install -r requirements.txt
 ```
 
+---
 
-
-\### 2. Create environment
-
-
+## Usage
 
 ```bash
-
-conda create -n llm python=3.11
-
-conda activate llm
-
+python gradio_app.py
 ```
 
-
-
-\### 3. Install dependencies
-
-
-
-```bash
-
-pip install torch transformers sentence-transformers faiss-cpu pypdf accelerate
+Open in browser:
 
 ```
-
-
-
-\---
-
-
-
-\## Usage
-
-
-
-Run the application:
-
-
-
-```bash
-
-python app.py
-
+http://127.0.0.1:7860
 ```
 
+---
 
+## Example
 
-Example queries:
-
-
-
-```text
-
+**Question**
+```
 What is this document about?
-
-Summarize the document
-
-Explain how RAG works
-
 ```
 
-
-
-\---
-
-
-
-\## Technical Implementation
-
-
-
-\### Document Processing
-
-
-
-\* Supports `.txt`, `.md`, `.pdf`
-
-\* Extracts raw text for downstream processing
-
-
-
-\### Text Chunking
-
-
-
-\* Fixed-size chunking with overlap
-
-\* Preserves semantic continuity across chunks
-
-
-
-\### Embedding Generation
-
-
-
-\* Model: `all-MiniLM-L6-v2`
-
-\* Converts text into dense vector representations
-
-
-
-\### Vector Search
-
-
-
-\* FAISS-based similarity search using L2 distance
-
-\* Retrieves top-k relevant document chunks
-
-
-
-\### RAG Pipeline
-
-
-
-\* Query → embedding → retrieval → prompt → LLM generation
-
-\* Ensures responses are grounded in retrieved context
-
-
-
-\---
-
-
-
-\## Prompt Engineering
-
-
-
-The system enforces controlled generation using structured prompts:
-
-
-
-```text
-
-Use only the provided context
-
-Do not hallucinate
-
-Answer clearly and concisely
-
+**Answer**
+```
+The document explains large language models and how RAG improves accuracy by combining retrieval and generation.
 ```
 
+---
 
+## Limitations
 
-\---
+- Single-document support
+- No conversation memory
+- Performance depends on local hardware
 
+---
 
+## Future Work
 
-\## Example
+- Multi-document retrieval
+- PDF upload via UI
+- Chat history memory
+- Deployment (Docker / Cloud)
 
+---
 
-
-\*\*Input:\*\*
-
-
-
-```text
-
-What is this document about?
-
-```
-
-
-
-\*\*Output:\*\*
-
-
-
-```text
-
-The document describes large language models, their applications,
-
-and how retrieval-augmented generation improves answer accuracy.
-
-```
-
-
-
-\---
-
-
-
-\## Limitations
-
-
-
-\* Small local model may produce less fluent responses
-
-\* Limited context window for long documents
-
-\* Command-line interface only
-
-
-
-\---
-
-
-
-\## Future Work
-
-
-
-\* Web interface using Streamlit
-
-\* Multi-document retrieval support
-
-\* Model quantization for faster inference
-
-\* API deployment using FastAPI
-
-\* Advanced reranking techniques
-
-
-
-\---
-
-
-
-\## Learnings
-
-
-
-\* End-to-end RAG system design
-
-\* Embedding-based semantic search
-
-\* Prompt engineering strategies
-
-\* Integration of LLMs with retrieval systems
-
-
-
-\---
-
-
-
-\## Author
-
-
-
-Zhe Luo
-
-
-
-\---
-
-
-
-\## License
-
-
+## License
 
 MIT License
 
+---
 
+## Author
 
+Luo Zhe  
+https://github.com/luozhe2019
